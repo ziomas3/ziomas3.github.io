@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>zad1</title>
+    <meta name="author" content="ziomas3">
+</head>
+
+<body>
+    <canvas id="rys" width=600px height=400px style="border:1px solid #d3d3d3;">
+
+    </canvas>
+    <button class="btn1">balwan</button>
+    <button class="btn2">dom</button>
+    <button class="btn3">wyczysc</button>
+
+    <script>
+        var c = document.getElementById("rys");
+        var ctx = c.getContext("2d");
+        function balwan(x, y, height) {
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.fillStyle = "white";
+            ctx.arc(x, y, height, 0, 2 * Math.PI);//duza kulka
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y - height - height * 0.7, height * 0.7, 0, 2 * Math.PI);//srednia kulka
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y - height * 0.7 * 2 - height - height * 0.5, height * 0.5, 0, 2 * Math.PI);//mala kulka
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x - height * 0.25, y - height * 0.7 * 2 - height - height * 0.5 - height * 0.25, height * 0.1, 0, 2 * Math.PI);//oczy
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x + height * 0.25, y - height * 0.7 * 2 - height - height * 0.5 - height * 0.25, height * 0.1, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x - height * 0.25, y - height * 0.7 * 2 - height - height * 0.5 - height * 0.25, height * 0.01, 0, 2 * Math.PI);//zrenice
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x + height * 0.25, y - height * 0.7 * 2 - height - height * 0.5 - height * 0.25, height * 0.01, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y - height - height * 0.7 - height * 0.3, height * 0.05, 0, 2 * Math.PI);//guziki
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y - height - height * 0.7 + height * 0.3, height * 0.05, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y - height * 0.3, height * 0.05, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.moveTo(x - height * 0.5, y - height * 0.7 * 2 - height - height); // podstawa kapelusza
+            ctx.lineTo(x + height * 0.5, y - height * 0.7 * 2 - height - height);
+            ctx.stroke();
+            ctx.fillStyle = "black";
+            ctx.fillRect(x - height * 0.3, y - height * 0.7 * 2 - height - height, height * 0.6, -height * 0.8); // kapelusz
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y - height * 0.7 * 2 - height - height * 0.5, height * 0.1, 0, 2 * Math.PI);//nos
+            ctx.fillStyle = "orange";
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y - height * 0.7 * 2 - height - height * 0.5, height * 0.05, 0, 2 * Math.PI);//nos
+            ctx.stroke();
+        }
+        function domek(x, y, height) {
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.fillStyle = "lightblue";
+            ctx.fillRect(x, y, height, -height); //sciany
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y - height); //dach
+            ctx.lineTo(x + height * 0.5, y - height * 1.5);
+            ctx.lineTo(x + height, y - height);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = "red";
+            ctx.fillRect(x + height * 0.35, y, height * 0.3, -height * 0.6); //sciany
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.fillStyle = "white";
+            ctx.rect(x + height * 0.7, y - height * 0.5, height * 0.25, -height * 0.25); //okna
+            ctx.fill();
+            ctx.stroke();
+            ctx.rect(x + height * 0.05, y - height * 0.5, height * 0.25, -height * 0.25);
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.moveTo(x + height * 0.5 + height * 0.5 * 0.33, y - height - height * 0.33); //dach
+            ctx.lineTo(x + height * 0.5 + height * 0.5 * 0.33, y - height - height * 0.45);
+            ctx.lineTo(x + height * 0.5 + height * 0.5 * 0.66, y - height - height * 0.45);
+            ctx.lineTo(x + height * 0.5 + height * 0.5 * 0.66, y - height - height * 0.33 * 0.5);
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.arc(x + height * 0.5 + height * 0.5 * 0.66, y - height - height * 0.45, height * 0.025, 0, 2 * Math.PI);
+            ctx.stroke();
+
+        }
+        $(document).ready(function () {
+            $(".btn1").click(function () {
+                bh=50;
+                $("canvas").attr('onClick', 'balwan(event.clientX-this.offsetLeft,event.clientY+bh*1.5,bh);');
+
+            });
+            $(".btn2").click(function () {
+                dh=200;
+                $("canvas").attr('onClick', 'domek(event.clientX-this.offsetLeft-dh/2,event.clientY+dh/2,dh);');
+
+            });
+
+            $(".btn3").click(function () {
+                ctx.clearRect(0, 0, c.width, c.height);
+
+
+            });
+        });
+
+    </script>
+</body>
+
+</html>

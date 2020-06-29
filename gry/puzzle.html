@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ukladanka</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="jquery.ui.touch-punch.min.js"></script>
+  <style>
+    #box {
+      width: 800px;
+      height: 800px;
+      margin: 10px 10px auto;
+      float: left;
+    }
+
+    #wrap {
+      width: 1700px;
+      height: 900px;
+      margin: 10px auto;
+      clear: both
+    }
+
+    div {
+      width: 200px;
+      height: 200px;
+      float: left;
+      position: relative;
+    }
+
+    #box>div {
+      width: 200px;
+      height: 200px;
+      box-sizing: border-box;
+      border: 1px solid green;
+      background: #eee;
+    }
+
+    #box>div.active {
+      background: #ddf
+    }
+
+    #box>div.hover {
+      background: #eff
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="box">
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+      <div class="rng"></div>
+
+    </div>
+    <div id="box">
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+      <div id="plansza"></div>
+    </div>
+
+
+  </div>
+  <script>
+    ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    var dolosuj = document.getElementsByClassName("rng");
+    for (var z = 0; z < 16; z++) {
+      var choosen = ids[parseInt(Math.random() * ids.length)];
+
+      dolosuj[choosen].id = "a" + z;
+
+      for (var i = ids.length - 1; i >= 0; i--) {
+        if (ids[i] === choosen) {
+          ids.splice(i, 1);
+        }
+      }
+    }
+    $(function () {
+      $(".rng").draggable({
+        appendTo: "body",
+        helper: "clone",
+        start: function () { $(this).hide(); },
+        stop: function () { $(this).show(); }
+      });
+
+      $("#box >div").droppable({
+        activeClass: "active",
+        hoverClass: "hover",
+        accept: function (a) { return $(this).html() == ''; },//można położyć tylko jeśli puste pole
+        drop: function (event, ui) {
+          ui.draggable.appendTo(this);
+
+          var licznik = 0;
+          for (var i = 0; i < $("#plansza .rng").length; i++) {
+            var tmp = $("#plansza .rng")[i].id;
+            if (tmp == "a" + i) licznik++;
+          }
+          if (licznik == 16) alert("wygrales!");
+        }
+      });
+    });
+    var x = 0;
+    var y = 0;
+    for (var i = 0; i < 16; i++) {
+
+      posx = x * 33;
+      posy = y * 33;
+      console.log(posx, posy);
+      document.getElementById("a" + i).style.backgroundImage = "url('img/d.jpg')";
+      document.getElementById("a" + i).style.backgroundSize = "800px 800px";
+      document.getElementById("a" + i).style.backgroundPosition = `${posx}% ${posy}%`;
+      x++;
+      if (x == 4) { x = 0; y++; };
+    }
+
+  </script>
+</body>
+
+</html>

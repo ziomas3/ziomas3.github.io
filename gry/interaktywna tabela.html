@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+td
+{
+	border:1px solid gray;
+	height:20px;
+	width:20px;
+	margin:5px;
+}
+.test
+{
+background-color:green;
+}
+
+</style>
+<script>
+$(document).ready(function(){
+    $(".btn1").click(function(){
+        $("table").append("<tr></tr>");
+		
+    });
+    $(".btn2").click(function(){
+        $("tr").append("<td class='td'>  </td>");
+		
+    });
+
+ 	$(".btn3").click(function(){
+	$("tr:last").append("<td>  </td>");
+		
+		
+    });
+	
+	$(".btn4").click(function(){
+		$("tr:last").remove();
+	});
+	
+	$(".btn5").click(function(){
+		$("td:last-child").remove();
+		
+    });
+	
+	$(".btn6").click(function(){
+		$("td").addClass( "test" );
+		$("td").mouseover(function(){
+			$(this).css("background-color","red");
+			$(this).animate({
+				height: '50px',
+				width: '50px'
+			});
+		});
+		$("td").mouseout(function(){
+			$(this).css("background-color","yellow");
+			$(this).animate({
+				height: '25px',
+				width: '25px'
+			},20);
+		});
+		
+    });
+
+   
+});
+
+
+</script>
+</head>
+<body>
+<table>
+</table>
+
+
+<button class="btn1">Dodaj wiersz</button>
+<button class="btn2">Dodaj kolumne</button>
+<button class="btn3">Dodaj komorke do ostatniego wiersza </button>
+<button class="btn4">Usuwa ostatni wiersz</button>
+<button class="btn5">Usuwa ostatnia kolumne</button>
+<button class="btn6">Dodaje obsluge klikania</button>
+
+</body>
+</html>
+

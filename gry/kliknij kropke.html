@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+td{
+	border:1px solid gray;
+	height:20px;
+	width:20px;
+	margin:5px;
+}
+#ramka {height:500px;width:500px; border:1px solid grey;margin:auto;position:relative}
+b {display:block;height:30px;width:30px;border-radius:15px;background:red;position:absolute}
+</style>
+<script>
+var score=0;
+
+function punkt(){
+    $("#ramka").append($("<b></b>").css({"top":`${Math.random()*470}px`,"left":`${Math.random()*470}px`}).mousedown(function(){
+			$(this).remove();
+			score++;
+	}).each(function(){var $this = $(this);setTimeout(function() {$this.remove();},2000);
+	}));
+		
+}
+
+
+function zacznij(){
+pil=setInterval(punkt, 500);
+setTimeout(function() {
+ alert("Twoj wynik: "+score); 
+ score=0;
+ clearInterval(pil);
+ $("#ramka").html(" ");
+ }, 10000);
+}
+
+</script>
+</head>
+<body>
+
+<div id='ramka'>
+
+</div>
+
+<div style="text-align:center;">
+<button class="btn1" onclick="zacznij()">Od nowa</button>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="jquery.ui.touch-punch.min.js"></script>
+    <style>
+        td {
+            height: 50px;
+            width: 50px;
+            border: 1px solid grey;
+            text-align: center
+        }
+
+        td:hover {
+            background: #ddd
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        h1 {
+            text-align: center
+        }
+
+        td {
+            font-size: 35px
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td> </td>
+            <td> </td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td> </td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+        </tr>
+        <tr>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td></td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+        </tr>
+        <tr>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td> </td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td> </td>
+            <td>O</td>
+            <td>O</td>
+            <td>O</td>
+            <td> </td>
+            <td> </td>
+        </tr>
+    </table>
+
+    <h1 onclick="location=location"></h1>
+    <script>
+
+        var i, from, where, middle, ile = 0;
+        var td = document.body.getElementsByTagName('TD');
+        var h1 = document.body.getElementsByTagName('H1');
+
+        for (i in td) {
+            td[i].nr = i;
+            if (td[i].innerHTML != ' ');
+            //td[i].onclick = f;
+            else {
+                td[i].style.border = 'none';
+                td[i].style.background = 'white';
+            }
+            if (td[i].innerHTML == 'O')
+                ile++;
+        }
+        $(function () {
+            $("td").draggable({
+                appendTo: "body",
+                helper: "clone",
+                start: function () {from = this.nr; this.style.color = 'red';} ,
+                drag: function () { this.style.color = 'red';} ,
+                stop: function () { this.style.color = ''; }
+            });
+
+            $("td:contains('')").droppable({
+                accept: function () {
+                    where = this.nr;
+                    if (Math.abs(where - from) == 2 || Math.abs(where - from) == 14) {
+                        if (this.innerHTML=="") middle = (Number(where) + Number(from)) / 2;
+                        else middle=0;
+                       
+                        return td[middle].innerHTML == 'O';
+                    }
+                    else
+                    return false;
+                },
+                drop: function (event, ui) {
+                    td[from].innerHTML="";
+                    td[middle].innerHTML="";
+                    this.innerHTML="O";
+                    ile--;
+                                if (ile > 1)
+                                    h1[0].innerHTML = 'Zostało ' + ile;
+                                else {
+                                    h1[0].innerHTML = 'Wygrałeś gratuluję';
+                                    h1[0].style.color = 'red';
+                                }
+                }
+            });
+        });
+/*
+                function f() {
+                    if (this.innerHTML == 'O') {
+                        if (from)
+                            td[from].style.color = '';
+                        from = this.nr;
+                        td[from].style.color = 'red';
+                    }
+                    if (this.innerHTML == '') {
+                        
+                        if (Math.abs(where - from) == 2 || Math.abs(where - from) == 14) {
+                            middle = (Number(where) + Number(from)) / 2;
+                            if (td[middle].innerHTML == 'O') {
+                                td[from].style.color = '';
+                                td[from].innerHTML = '';
+                                td[middle].innerHTML = '';
+                                td[where].innerHTML = 'O';
+                                td[where].style.color = 'red';
+                                from = where;
+                                ile--;
+                                if (ile > 1)
+                                    h1[0].innerHTML = 'Zostało ' + ile;
+                                else {
+                                    h1[0].innerHTML = 'Wygrałeś gratuluję';
+                                    h1[0].style.color = 'red';
+                                }
+                            }
+                        }
+                    }
+        
+                }
+        */
+
+    </script>
+
+</body>
+
+</html>

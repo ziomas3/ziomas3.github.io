@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="jquery.ui.touch-punch.min.js"></script>
+    <style>
+        h1 {
+            text-align: center
+        }
+
+        nav {
+            width: auto;
+            margin: auto
+        }
+
+        #hanoi {
+            height: 500px;
+            width: 900px;
+            margin: auto;
+            border: 1px solid grey;
+        }
+
+        #hanoi>div {
+            height: 500px;
+            width: 300px;
+            border: 1px solid green;
+            box-sizing: border-box;
+            vertical-align: bottom;
+            display: table-cell;
+        }
+
+        .k {
+            background: yellow;
+            border: 1px solid grey;
+            height: 50px;
+            border-radius: 25px;
+        }
+
+        .k.cur {
+            background: green
+        }
+
+        * {
+            font-family: Sans;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Hanoi</h1>
+
+    <center>Przenieś wieżę do prawej klatki</center><br>
+
+    <div id='hanoi'>
+        <div id='a' class="box"></div>
+        <div id='b' class="box"></div>
+        <div id='c' class="box"></div>
+    </div>
+
+    <script>
+        var cur;
+        var i;
+        var to,from;
+
+        for (i = 2; i < 10; i++)
+            $("#a").append("<div id='" + i + "' class='k' style='width:" + i * 25 + "px;margin-left:" + (150 - i * 12.5) + "px'></div>");
+
+        $(function () {
+            $("div div div").draggable({
+                appendTo: "body",
+                helper: "clone",
+                start: function () {
+                    console.log($(this).is(":first-child"));
+                    if($(this).is(":first-child"))
+                    from=$(this).attr("id");
+                    else 
+                    from="666";
+                    $(this).hide(); 
+                },
+                stop: function () { $(this).show(); }
+            });
+
+            $("div .box").droppable({
+                activeClass: "active",
+                hoverClass: "hover",
+                accept: function (a) { 
+                    
+                    to=$(this).children(":first").attr("id");
+                    console.log(from,to);
+                    if((to==undefined || to>from) && from!=666)
+                        return true; 
+            
+            },
+                drop: function (event, ui) {
+                    ui.draggable.prependTo(this);
+
+                }
+            });
+        });
+        
+    </script>
+
+</body>
+
+</html>
